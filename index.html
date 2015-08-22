@@ -124,7 +124,7 @@
         
 			<script>
                 $('#send_data').click(function(){
-				location.href = "#page2";
+				
 				alert('hello¡');
 			
                     var latitude_driver = 36.167778;//$('#latitude').val();
@@ -139,7 +139,7 @@
                                 console.log(data);
 								//alert(data[0].dp_long);
 								alert(parseFloat(data[0].dp_long));//-96.8141;//data[0].dp_long;
-	
+								location.href = "#page2";
 
 								
 								var latitude_pickup = parseFloat(data[0].pk_lat);
