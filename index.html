@@ -3,9 +3,35 @@
   <head>
     <title>Device Properties Example</title>
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <style>
+			#map{
+					height:300px;
+					width:100%;
+					padding:0;
+					righ:0px;
+					bottom:0px !important;
+					left:0px !important;
+				}
+				#wrapper {
+					padding:10px;
+					}
+				#outputDiv {
+					display: inline-block;
+					width:95%;
+					top:0px;
+					border: 1px solid green;
+				}
+				#outputDiv2 {
+					display: inline-block;
+					width:95%;
+					top:0px;
+					
+					border: 1px solid green;
+				}
+	</style>
 	<script src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script src="jquery.mobile-1.4.5.min"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" charset="utf-8">
 
     // Wait for device API libraries to load
@@ -15,7 +41,9 @@
     // device APIs are available
     //
     function onDeviceReady() {
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+		setInterval(navigator.geolocation.getCurrentPosition(onSuccess, onError), 5000);
+		
+        
     }
 
     // onSuccess Geolocation
@@ -24,11 +52,7 @@
         var element = document.getElementById('geolocation');
         element.innerHTML = 'Latitude: <input type="text" id="latitude" name="latitude" value="'           + position.coords.latitude              + '" /><br />' +
                             'Longitude: <input type="text" id="longitude" name="longitude" value="'          + position.coords.longitude             + '" /><br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />' +
-                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                            'Heading: '            + position.coords.heading               + '<br />' +
-                            'Timestamp: '          + position.timestamp                    + '<br />';
+                            'Altitude: '           + position.coords.altitude              + '<br />';
     }
 
     // onError Callback receives a PositionError object
@@ -42,48 +66,221 @@
  
   </head>
   <body>
-  <div data-role="page">
+  <div data-role="page" id="page1">
+  	<div data-role="header">
+    	<div><img width="100%" src="css/logo.png" style="padding-top:15px; padding-left:15px"/></div>
+    </div>
   	<div class="inputstyle">
   		<div role="main" class="ui-content">
-        	<div><img src="css/logo.png" style="padding-top:15px; padding-left:15px"/></div>
+        	
         	<p id="geolocation">Finding geolocation...</p>
-            	<div><input type="text" id="user_name" name="user_name" value="" placeholder="your code" style="width:50%"/></div>
+            	<!--<div><input type="text" id="user_name" name="user_name" value="" placeholder="your code" style="width:50%"/></div>-->
+                <div>
+                    <select id="user_name">
+                        <option value="">Choose user...</option>
+                         <option value="1">David Bell</option>
+                         <option value="2">Roberto Cadena</option>
+                         <option value="3">Willmar Marin</option>
+                         <option value="4">Hernando Pe&ntilde;a</option>
+                         <option value="5">Luis Morillo</option>
+                    </select>
+                </div>
                 <br />
             	<div><input type="button" value="SEND LOCATION" id="send_data" name="send_data" style="width:50%" /></div>
-                
-            	
      	</div>
      </div>
    </div>
-        
+   
+    <div data-role="page" id="page2" data-url="map-page">        	
+        	<div data-role="header">
+            	<h1> <a href="#page1" id="back" class="btn-class2"> Back</a></h1>
+            </div>
+            <div role="mappage" class="ui-content">
+                <div id="map"></div>
+                <div id="wrapper">
+                <table>
+                	<tr><td>PickUp Place</td><td>Destination</td></tr>
+                 	<tr>
+                    	<td>
+                        	<div  id="outputDiv"></div>
+                        </td>
+                        <td>
+                        	<div  id="outputDiv2"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td colspan="2">
+                        	<div><input type="button" value="STANBY" id="" name="" style="width:50%" /></div>
+                        </td>
+                     </tr>
+                </table>    
+                </div>
+             </div>
+    </div>
+    
+    <div data-role="page" id="page3">
+    	
+    </div>
         
 			<script>
                 $('#send_data').click(function(){
-					
-				setInterval(function(){
-                    var lat = $('#latitude').val();
-                    var long = $('#longitude').val();
-					var name = $('#user_name').val();
+				location.href = "#page2";	
+			
+                    var latitude_driver = $('#latitude').val();
+                    var longitude_driver = $('#longitude').val();
+					var id_driver = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
-                            data: {user_lat: lat, user_long: long, user_name: name},
-                            url: 'http://leanstaffing.com/testserver/save.php',
+							dataType: 'json',
+                            //data: {driver: id_driver},
+                            url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
                             success: function(data){
                                 console.log(data);
-                                alert('Your location was successfully added');
+								/*alert(data[0].dp_long);
+								alert(parseFloat(data[0].dp_long));//-96.8141;//data[0].dp_long;
+		*/
+
+								
+								var latitude_pickup = parseFloat(data[0].pk_lat);
+								var longitude_pickup =parseFloat(data[0].pk_long);
+								var latitude_drop = parseFloat(data[0].dp_lat);
+								var longitude_drop = parseFloat(data[0].dp_long);
+								initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
+                                //alert('Your location was successfully added');
                             },
-                            error: function(){
+                            error: function(data){
                                 console.log(data);
                                 alert('There was an error adding your location');
                             }})
-                        }, 15000);
+                       
                       return false;
                 });
           </script>
+          <!----------------------- Map, Distance , Time ------------------------------->
+          
+          <script>
+					function initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop) {
+					  var bounds = new google.maps.LatLngBounds;
+					  var markersArray = [];
+					
+					  var origin1 = {lat: latitude_driver, lng: longitude_driver};
+					  var destinationA = {lat: latitude_pickup, lng: longitude_pickup};
+					  var origin2 = {lat: latitude_pickup, lng: longitude_pickup};
+					  var destinationB = {lat: latitude_drop, lng: longitude_drop};
+					
+					  var destinationIcon = 'https://chart.googleapis.com/chart?' +
+						  'chst=d_map_pin_letter&chld=D|FF0000|000000';
+					  var originIcon = 'https://chart.googleapis.com/chart?' +
+						  'chst=d_map_pin_letter&chld=D|FF0000|000000';
+					  var map = new google.maps.Map(document.getElementById('map'), {
+						//center: {lat: 55.53, lng: 9.4},
+						center: {lat: latitude_driver, lng: longitude_driver},
+						zoom: 10
+					  });
+					  var geocoder = new google.maps.Geocoder;
+					
+					  var service = new google.maps.DistanceMatrixService;
+					  service.getDistanceMatrix({
+						origins: [origin1, origin2],
+						destinations: [destinationA, destinationB],
+						travelMode: google.maps.TravelMode.DRIVING,
+						unitSystem: google.maps.UnitSystem.METRIC,
+						avoidHighways: false,
+						avoidTolls: false
+					  }, function(response, status) {
+						if (status !== google.maps.DistanceMatrixStatus.OK) {
+						  alert('Error was: ' + status);
+						} else {
+						  var originList = response.originAddresses;
+						  var destinationList = response.destinationAddresses;
+						  var outputDiv = document.getElementById('outputDiv');
+						  var outputDiv2 = document.getElementById('outputDiv2');
+						  outputDiv.innerHTML = '';
+						  outputDiv2.innerHTML = '';
+						  deleteMarkers(markersArray);
+						   
+					
+						  var showGeocodedAddressOnMap = function(asDestination) {
+							var icon = asDestination ? destinationIcon : originIcon;
+							return function(results, status) {
+							  if (status === google.maps.GeocoderStatus.OK) {
+								map.fitBounds(bounds.extend(results[0].geometry.location));
+								markersArray.push(new google.maps.Marker({
+								  map: map,
+								  position: results[0].geometry.location,
+								  icon: icon
+								}));
+							  } else {
+								alert('Geocode was not successful due to: ' + status);
+							  }
+							};
+						  };
+					
+						 /* for (var i = 0; i < originList.length; i++) {
+							var results = response.rows[i].elements;
+							  geocoder.geocode({'address': originList[i]},
+								  showGeocodedAddressOnMap(false));
+							for (var j = 0; j < results.length; j++) {
+							  geocoder.geocode({'address': destinationList[j]},
+								  showGeocodedAddressOnMap(true));
+							  outputDiv.innerHTML += '<b>' + originList[i] + ' to ' + destinationList[j] +
+								  ': ' + results[j].distance.text + ' in ' +
+								  results[j].duration.text + '</b>' + '<br>';
+								  alert(j);
+							}
+						  }
+						  */
+						  
+						  for (var i = 0; i < 1; i++) {
+							var results = response.rows[i].elements;
+							  geocoder.geocode({'address': originList[i]},
+								  showGeocodedAddressOnMap(false));
+							for (var j = 0; j < 1; j++) {
+							  geocoder.geocode({'address': destinationList[j]},
+								  showGeocodedAddressOnMap(true));
+							  outputDiv.innerHTML += '<b>' + originList[i] + ' to ' + destinationList[j] +
+								  ': ' + results[j].distance.text + ' in ' +
+								  results[j].duration.text + '</b>' + '<br>';
+								  alert(j);
+							}
+						  }
+						  
+						  for (var i = 1; i < 2; i++) {
+							var results = response.rows[i].elements;
+							  geocoder.geocode({'address': originList[i]},
+								  showGeocodedAddressOnMap(false));
+							for (var j = 1; j < 2; j++) {
+							  geocoder.geocode({'address': destinationList[j]},
+								  showGeocodedAddressOnMap(true));
+							  outputDiv2.innerHTML += '<b>' + originList[i] + ' to ' + destinationList[j] +
+								  ': ' + results[j].distance.text + ' in ' +
+								  results[j].duration.text + '</b>' + '<br>';
+								  alert(j);
+							}
+						  }
+						  
+						  
+						
+						}
+					  });
+					}
+					
+					function deleteMarkers(markersArray) {
+					  for (var i = 0; i < markersArray.length; i++) {
+						markersArray[i].setMap(null);
+					  }
+					  markersArray = [];
+					}
+
+    	</script>
+    <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap1" async defer></script>
+<!-----------------------END OF   Map, Distance , Time ------------------------------->
+          
+          
     <script>
-		setTimeout(function(){
+/*		setTimeout(function(){
 	   			window.location.reload(1);
-			}, 100000);
+			}, 100000);*/
 	</script>
   </body>
 </html>
