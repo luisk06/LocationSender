@@ -31,7 +31,7 @@
 	</style>
 	<script src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <!-- <script src="js/jquery.mobile-1.4.5.min.js"></script> -->
     <script type="text/javascript" charset="utf-8">
 
     // Wait for device API libraries to load
@@ -96,7 +96,7 @@
             	<h1> <a href="#page1" id="back" class="btn-class2"> Back</a></h1>
             </div>
             <div role="mappage" class="ui-content">
-                <!-- <div id="map"></div> -->
+                <div id="map"></div>
                 <div id="wrapper">
                 <table>
                 	<tr><td>PickUp Place</td><td>Destination</td></tr>
@@ -146,7 +146,7 @@
 								var longitude_pickup =parseFloat(data[0].pk_long);
 								var latitude_drop = parseFloat(data[0].dp_lat);
 								var longitude_drop = parseFloat(data[0].dp_long);
-								//initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
+								initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
                                 //alert('Your location was successfully added');
                             },
                             error: function(data){
