@@ -33,7 +33,15 @@
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
      <script src="js/jquery.mobile-1.4.5.min.js"></script> 
     <script type="text/javascript" charset="utf-8">
-
+	
+	
+    function myFunction(){
+		$.mobile.loading().hide();
+		$('#page1').show();
+		$('#page2').hide();
+		$('#page3').hide();
+			
+		};
     // Wait for device API libraries to load
     //
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -41,6 +49,7 @@
     // device APIs are available
     //
     function onDeviceReady() {
+	
 		setInterval(navigator.geolocation.getCurrentPosition(onSuccess, onError), 5000);
 		
         
@@ -65,7 +74,7 @@
     </script>
  
   </head>
-  <body>
+  <body onload="myFunction()">
   <div data-role="page" id="page1">
   	<div data-role="header">
     	<div><img width="100%" src="css/logo.png" style="padding-top:15px; padding-left:15px"/></div>
@@ -93,7 +102,7 @@
    
     <div data-role="page" id="page2" data-url="map-page">        	
         	<div data-role="header">
-            	<h1> <a href="#page1" id="back" class="btn-class2"> Back</a></h1>
+            	<h1> <a href="" onclick="goback();" id="back" class="btn-class2"> Back</a></h1>
             </div>
             <div role="mappage" class="ui-content">
                 <div id="map"></div>
@@ -109,7 +118,7 @@
                         </td>
                     </tr>
                     <tr>
-                    <td colspan="2">
+                    <td >
                         	<div><input type="button" value="STANBY" id="" name="" style="width:50%" /></div>
                         </td>
                      </tr>
@@ -121,10 +130,16 @@
     <div data-role="page" id="page3">
     	
     </div>
-        
+    <script>
+        function goback() {
+			$('#page2').hide();
+			$('#page1').show();
+        }
+		</script>
 			<script>
                 $('#send_data').click(function(){
-				
+				$('#page1').hide();
+				$('#page2').show();
 				alert('hello¡');
 			
                     var latitude_driver = 36.167778;//$('#latitude').val();
