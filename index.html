@@ -126,8 +126,8 @@
                 $('#send_data').click(function(){
 				location.href = "#page2";	
 			
-                    var latitude_driver = $('#latitude').val();
-                    var longitude_driver = $('#longitude').val();
+                    var latitude_driver = 36.167778;//$('#latitude').val();
+                    var longitude_driver = -83.368442;//$('#longitude').val();
 					var id_driver = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
@@ -136,9 +136,9 @@
                             url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
                             success: function(data){
                                 console.log(data);
-								/*alert(data[0].dp_long);
+								//alert(data[0].dp_long);
 								alert(parseFloat(data[0].dp_long));//-96.8141;//data[0].dp_long;
-		*/
+	
 
 								
 								var latitude_pickup = parseFloat(data[0].pk_lat);
