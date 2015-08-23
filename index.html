@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Device Properties Example</title>
-    <!-- <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" /> -->
+     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
     <style>
 			#map{
 					height:300px;
@@ -31,7 +31,7 @@
 	</style>
 	<script src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-     <!-- <script src="js/jquery.mobile-1.4.5.min.js"></script>  -->
+      <script src="js/jquery.mobile-1.4.5.min.js"></script> 
     <script type="text/javascript" charset="utf-8">
 	
 	
@@ -89,14 +89,15 @@
                     </select>
                 </div>
                 <br />
-            	<div><input type="button" value="SEND LOCATION" id="send_data" name="send_data" style="width:50%" /></div>
+            	<!--<div><input type="button" value="SEND LOCATION" id="send_data" name="send_data" style="width:50%" /></div> -->
+            	<div><a href="#" id="send_data" name="send_data">SEND LOCATION</a></div>
      	</div>
      </div>
    </div>
    
     <div data-role="page" id="page2" data-url="map-page">        	
         	<div data-role="header">
-            	<h1> <a href="" onclick="goback();" id="back" class="btn-class2"> Back</a></h1>
+            	<h1> <a href="#page1" id="back" class="btn-class2"> Back</a></h1>
             </div>
             <div role="mappage" class="ui-content">
                 <div id="map"></div>
@@ -125,15 +126,11 @@
     	
     </div>
     <script>
-        function goback() {
-			$('#page2').hide();
-			$('#page1').show();
-        }
+       
 		</script>
 			<script>
                 $('#send_data').click(function(){
-				$('#page1').hide();
-				$('#page2').show();
+			//location.href("#page2");
 				alert('hello¡');
 			
                     var latitude_driver = 36.167778;//$('#latitude').val();
@@ -288,13 +285,7 @@
           
           
     <script>
-	    function myFunction(){
-		$.mobile.loading().hide();
-		$('#page1').show();
-		$('#page2').hide();
-		$('#page3').hide();
-			
-		};
+
 /*		setTimeout(function(){
 	   			window.location.reload(1);
 			}, 100000);*/
