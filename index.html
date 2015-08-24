@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Device Properties Example</title>
-     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" /> 
     <style>
 			#map{
 					height:300px;
@@ -28,6 +28,17 @@
 					
 					border: 1px solid green;
 				}
+				#lol{
+				overflow-y:scroll;
+				height:300px;
+				}
+				
+				
+				
+				
+				
+				
+				
 	</style>
 	<script src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
@@ -68,7 +79,7 @@
     </script>
  
   </head>
-  <body onload="myFunction()">
+  <body>
   <div data-role="page" id="page1">
   	<div data-role="header">
     	<div><img width="100%" src="css/logo.png" style="padding-top:15px; padding-left:15px"/></div>
@@ -90,10 +101,27 @@
                 </div>
                 <br />
             	<!--<div><input type="button" value="SEND LOCATION" id="send_data" name="send_data" style="width:50%" /></div> -->
-            	<div><a href="#" id="send_data" name="send_data">SEND LOCATION</a></div>
+            	<div><a href="#" id="send_data1" name="send_data1">SEND LOCATION</a></div>
      	</div>
      </div>
    </div>
+   
+   
+   
+   
+   <div data-role="listpage" id="page1_1">        	
+        	<div data-role="header">
+            	<h1> <a href="#page1" id="back" class="btn-class2"> Back</a></h1>
+            </div>
+				<div role="listpage" class="ui-content" id="lol">
+					<p id="lol_item">Loading...</p>
+				 </div>
+		<div><a href="#" id="send_data2" name="send_data2">SEND LOCATION</a></div>
+    </div>
+	
+	
+	
+	
    
     <div data-role="page" id="page2" data-url="map-page">        	
         	<div data-role="header">
@@ -114,7 +142,7 @@
                     </tr>
                     <tr>
                     <td >
-                        	<div><input type="button" value="STANBY" id="" name="" style="width:50%" /></div>
+                        	<div><a href="#" id="send_data3" name="send_data3">GET SIGNATURE</a></div>
                         </td>
                      </tr>
                 </table>    
@@ -122,17 +150,51 @@
              </div>
     </div>
     
-    <div data-role="page" id="page3">
-    	
+    <div data-role="" id="page3">
+			<div data-role="header">
+            	<h1> <a href="#page2" id="back3" class="btn-class2"> Back</a></h1>
+            </div>
+			<div id="content">
+				<div id="signatureparent">
+					<div id="signature"></div>
+				</div>
+			</div>
     </div>
-    <script>
-       
+	
+	
+		<script>
+			 $('#send_data1').click(function(){
+				var id_driver = $('#user_name').val();
+				alert('prueba');
+				 $.ajax({
+                            type: 'POST',
+							dataType: 'json',
+                            url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
+                            success: function(data){
+                                console.log(data);
+								//alert(data[0].dp_long);
+								alert(data[0].idts_load);//-96.8141;//data[0].dp_long;
+								var load_item = document.getElementById('lol_item');
+								var test1 = parseFloat(data[0].idts_load);
+									for(i=0;i<data.length;i++){
+										load_item.innerHTML = '<a href="#" onclick="load_details('+i+')">'+data[i].customer+'</a><br />';
+										}
+										location.href = "#page1_1";
+										
+                                //alert('Your location was successfully added');
+                            },
+                            error: function(data){
+                                console.log(data);
+                                alert('There was an error adding your location');
+                            }})
+				
+			 });
 		</script>
 			<script>
-                $('#send_data').click(function(){
-			//location.href("#page2");
-			location.href = "#page2";
-				alert('hello¡');
+            function load_details(ix){
+				 //location.href("#page2");
+				 location.href = "#page2";
+				   alert('hello¡');
 			
                     var latitude_driver = 36.167778;//$('#latitude').val();
                     var longitude_driver = -83.368442;//$('#longitude').val();
@@ -145,14 +207,14 @@
                             success: function(data){
                                 console.log(data);
 								//alert(data[0].dp_long);
-								alert(parseFloat(data[0].dp_long));//-96.8141;//data[0].dp_long;
+								alert(parseFloat(data[ix].dp_long));//-96.8141;//data[0].dp_long;
 								
 
 								
-								var latitude_pickup = parseFloat(data[0].pk_lat);
-								var longitude_pickup =parseFloat(data[0].pk_long);
-								var latitude_drop = parseFloat(data[0].dp_lat);
-								var longitude_drop = parseFloat(data[0].dp_long);
+								var latitude_pickup = parseFloat(data[ix].pk_lat);
+								var longitude_pickup =parseFloat(data[ix].pk_long);
+								var latitude_drop = parseFloat(data[ix].dp_lat);
+								var longitude_drop = parseFloat(data[ix].dp_long);
 								initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
                                 //alert('Your location was successfully added');
                             },
@@ -162,7 +224,7 @@
                             }})
                        
                       //return false;
-                });
+                };
           </script>
           <!----------------------- Map, Distance , Time ------------------------------->
           
@@ -285,6 +347,123 @@
 <!-----------------------END OF   Map, Distance , Time ------------------------------->
           
           
+		  
+		  
+
+
+<script src="js/jSignature.min.noconflict.js"></script>
+<script>
+/* SIGNATURE DETAILS
+*/
+(function($){
+
+$('#send_data3').click(function() {
+	$('#thisisundo').removeClass('ui-btn ui-input-btn ui-corner-all ui-shadow');
+	location.href = "#page3";
+	// This is the part where jSignature is initialized.
+	var $sigdiv = $("#signature").jSignature({'UndoButton':true})
+	
+	// All the code below is just code driving the demo. 
+	, $tools = $('#tools')
+	, $extraarea = $('#displayarea')
+	, pubsubprefix = 'jSignature.demo.'
+	
+	var export_plugins = $sigdiv.jSignature('listPlugins','export')
+	, chops = ['<span><b>Extract signature data as: </b></span><select>','<option value="">(select export format)</option>']
+	, name
+	for(var i in export_plugins){
+		if (export_plugins.hasOwnProperty(i)){
+			name = export_plugins[i]
+			chops.push('<option value="' + name + '">' + name + '</option>')
+		}
+	}
+	chops.push('</select><span><b> or: </b></span>')
+	
+	$(chops.join('')).bind('change', function(e){
+		if (e.target.value !== ''){
+			var data = $sigdiv.jSignature('getData', e.target.value)
+			$.publish(pubsubprefix + 'formatchanged')
+			if (typeof data === 'string'){
+				$('textarea', $tools).val(data)
+			} else if($.isArray(data) && data.length === 2){
+				$('textarea', $tools).val(data.join(','))
+				$.publish(pubsubprefix + data[0], data);
+			} else {
+				try {
+					$('textarea', $tools).val(JSON.stringify(data))
+				} catch (ex) {
+					$('textarea', $tools).val('Not sure how to stringify this, likely binary, format.')
+				}
+			}
+		}
+	}).appendTo($tools)
+
+	
+	$('<input type="button" value="Reset">').bind('click', function(e){
+		$sigdiv.jSignature('reset')
+	}).appendTo($tools)
+	
+	$('<div><textarea style="width:100%;height:7em;"></textarea></div>').appendTo($tools)
+	
+	$.subscribe(pubsubprefix + 'formatchanged', function(){
+		$extraarea.html('')
+	})
+
+	$.subscribe(pubsubprefix + 'image/svg+xml', function(data) {
+
+		try{
+			var i = new Image()
+			i.src = 'data:' + data[0] + ';base64,' + btoa( data[1] )
+			$(i).appendTo($extraarea)
+		} catch (ex) {
+
+		}
+		
+		var message = [
+			"If you don't see an image immediately above, it means your browser is unable to display in-line (data-url-formatted) SVG."
+			, "This is NOT an issue with jSignature, as we can export proper SVG document regardless of browser's ability to display it."
+			, "Try this page in a modern browser to see the SVG on the page, or export data as plain SVG, save to disk as text file and view in any SVG-capabale viewer."
+           ]
+		$( "<div>" + message.join("<br/>") + "</div>" ).appendTo( $extraarea )
+	});
+
+	$.subscribe(pubsubprefix + 'image/svg+xml;base64', function(data) {
+		var i = new Image()
+		i.src = 'data:' + data[0] + ',' + data[1]
+		$(i).appendTo($extraarea)
+		
+		var message = [
+			"If you don't see an image immediately above, it means your browser is unable to display in-line (data-url-formatted) SVG."
+			, "This is NOT an issue with jSignature, as we can export proper SVG document regardless of browser's ability to display it."
+			, "Try this page in a modern browser to see the SVG on the page, or export data as plain SVG, save to disk as text file and view in any SVG-capabale viewer."
+           ]
+		$( "<div>" + message.join("<br/>") + "</div>" ).appendTo( $extraarea )
+	});
+	
+	$.subscribe(pubsubprefix + 'image/png;base64', function(data) {
+		var i = new Image()
+		i.src = 'data:' + data[0] + ',' + data[1]
+		$('<span><b>As you can see, one of the problems of "image" extraction (besides not working on some old Androids, elsewhere) is that it extracts A LOT OF DATA and includes all the decoration that is not part of the signature.</b></span>').appendTo($extraarea)
+		$(i).appendTo($extraarea)
+	});
+	
+	$.subscribe(pubsubprefix + 'image/jsignature;base30', function(data) {
+		$('<span><b>This is a vector format not natively render-able by browsers. Format is a compressed "movement coordinates arrays" structure tuned for use server-side. The bonus of this format is its tiny storage footprint and ease of deriving rendering instructions in programmatic, iterative manner.</b></span>').appendTo($extraarea)
+	});
+
+	if (Modernizr.touch){
+		$('#scrollgrabber').height($('#content').height())		
+	}
+	
+})
+
+})(jQuery)
+
+</script>
+					
+					
+					
+		  
     <script>
 
 /*		setTimeout(function(){
