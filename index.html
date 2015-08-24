@@ -265,8 +265,8 @@
 				initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
 				
 				
-				$("#origin_text").html('Name: 'data[ix].or_contact'<br /> Address: 'data[ix].or_address_1'<br /> City :'data[ix].or_city', ST:'data[ix].or_state' <br/> item: 'data[ix].item1'');
-				$("#destination_text").html('Name: 'data[ix].dt_contact'<br /> Address: 'data[ix].dt_address_1'<br /> City :'data[ix].dt_city', ST:'data[ix].dt_state' <br/>');
+				$("#origin_text").html("Name: "+data[ix].or_contact+"<br /> Address: "+data[ix].or_address_1+"<br /> City :"+data[ix].or_city+", ST:"+data[ix].or_state+" <br/> item: "+data[ix].item1+"");
+				$("#destination_text").html("Name: "+data[ix].dt_contact+"<br /> Address: "+data[ix].dt_address_1+"<br /> City :"+data[ix].dt_city+", ST:"+data[ix].dt_state+" <br/>");
 				
                                 //alert('Your location was successfully added');
                             },
