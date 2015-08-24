@@ -236,11 +236,11 @@
             function load_details(ix){
 				 //location.href("#page2");
 				 location.href = "#page2";
-				   alert('hello¡');
+				   alert($('#latitude').val());
 			
                     var latitude_driver = 37.55;//$('#latitude').val();
                     var longitude_driver = -77.44;//$('#longitude').val();
-					var id_driver = $('#user_name').val();
+		    var id_driver = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
 							dataType: 'json',
