@@ -200,10 +200,12 @@
 	                                console.log(data);
 								//alert(data[0].dp_long);
 								alert(data[0].idts_load);//-96.8141;//data[0].dp_long;
-								var load_item = document.getElementById('lol_item');
-								var test1 = parseFloat(data[0].idts_load);
+								//var load_item = document.getElementById('lol_item');
+								
+								//var test1 = parseFloat(data[0].idts_load);
+								
 									for(i=0;i<data.length;i++){
-										load_item.innerHTML = '<a href="#" style="color: red;" class="" onclick="load_details('+i+')">ITEM : '+data[i].customer+'</a><br />';
+											$("#lol_item").append('<a href="#" style="color: red;" class="" onclick="load_details('+i+')">LOAD # :'+data[i].load_number+' : '+data[i].customer+'</a><br />');
 										}
 										location.href = "#page1_1";
 										
