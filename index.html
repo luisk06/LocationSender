@@ -55,7 +55,7 @@
     //
     function onDeviceReady() {
 	
-		 setInterval(function(){navigator.geolocation.getCurrentPosition(onSuccess, onError);},5000); 
+		 navigator.geolocation.getCurrentPosition(onSuccess, onError);
       
     }
 
@@ -177,16 +177,30 @@
                             url: 'http://leanstaffing.com/testserver/save.php',
                             success: function(data){
                                 console.log(data);
-                                alert('Your comment was successfully added');
+                                alert('Your location was successfully added');
                             },
                             error: function(){
                                 console.log(data);
-                                alert('There was an error adding your comment');
+                                alert('There was an error adding your location');
                             }})
 		}
 			
 		
 			 $('#send_data1').click(function(){
+			 setInterval(function(){ 
+			 	navigator.geolocation.getCurrentPosition(onSuccess, onError);
+			 	  function onSuccess(position) {
+				  	 var x = position.coords.latitude;
+				         var y = position.coords.longitude;
+				         send_to_db(x,y);
+			 	  }
+			 	   function onError(error) {
+				        alert('code: '    + error.code    + '\n' +
+				              'message: ' + error.message + '\n');
+				    }
+			 },3000);
+			 	
+			 	
 				var id_driver = $('#user_name').val();
 				alert('prueba');
 				 $.ajax({
