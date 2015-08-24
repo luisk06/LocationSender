@@ -238,8 +238,8 @@
 				 location.href = "#page2";
 				   alert($('#latitude').val());
 			
-                    var latitude_driver = 37.55;//$('#latitude').val();
-                    var longitude_driver = -77.44;//$('#longitude').val();
+                    var latitude_driver = parseFloat($('#latitude').val());//37.55;
+                    var longitude_driver = parseFloat($('#longitude').val());//-77.44;
 		    var id_driver = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
