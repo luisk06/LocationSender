@@ -144,7 +144,11 @@
                         </td>
                     </tr>
                     <tr>
-                    <td >
+                         <td><div id="origin_text"></div></td>
+                         <td><div id="destination_text"></div></td>
+                     </tr>
+                    <tr>
+                    <td>
                         	<div><a href="#" id="send_data3" name="send_data3" class="btn-class2">GET SIGNATURE</a></div>
                         </td>
                      </tr>
@@ -190,6 +194,7 @@
 			
 		
 			 $('#send_data1').click(function(){
+			 	$("lol_item").html("");
 				var id_driver = $('#user_name').val();
 				alert('prueba');
 				 $.ajax({
@@ -245,21 +250,24 @@
 		    var id_driver = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
-							dataType: 'json',
+			    dataType: 'json',
                             //data: {driver: id_driver},
                             url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
                             success: function(data){
                                 console.log(data);
-								//alert(data[0].dp_long);
-								alert(parseFloat(data[ix].dp_long));//-96.8141;//data[0].dp_long;
-								
-
-								
-								var latitude_pickup = parseFloat(data[ix].pk_lat);
-								var longitude_pickup =parseFloat(data[ix].pk_long);
-								var latitude_drop = parseFloat(data[ix].dp_lat);
-								var longitude_drop = parseFloat(data[ix].dp_long);
-								initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
+				//alert(data[0].dp_long);
+				alert(parseFloat(data[ix].dp_long));//-96.8141;//data[0].dp_long;
+				
+				var latitude_pickup = parseFloat(data[ix].pk_lat);
+				var longitude_pickup =parseFloat(data[ix].pk_long);
+				var latitude_drop = parseFloat(data[ix].dp_lat);
+				var longitude_drop = parseFloat(data[ix].dp_long);
+				initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
+				
+				
+				$("#origin_text").html('Name: 'data[ix].or_contact'<br /> Address: 'data[ix].or_address_1'<br /> City :'data[ix].or_city', ST:'data[ix].or_state' <br/> item: 'data[ix].item1'');
+				$("#destination_text").html('Name: 'data[ix].dt_contact'<br /> Address: 'data[ix].dt_address_1'<br /> City :'data[ix].dt_city', ST:'data[ix].dt_state' <br/>');
+				
                                 //alert('Your location was successfully added');
                             },
                             error: function(data){
@@ -352,9 +360,7 @@
 							for (var j = 0; j < 1; j++) {
 							  geocoder.geocode({'address': destinationList[j]},
 								  showGeocodedAddressOnMap(true));
-							  outputDiv.innerHTML += '<b>' + originList[i] + ' to ' + destinationList[j] +
-								  ': ' + results[j].distance.text + ' in ' +
-								  results[j].duration.text + '</b>' + '<br>';
+							  outputDiv.innerHTML += '<b>'+ results[j].duration.text + results[j].distance.text + '<br>' + '</b>';
 								 
 							}
 						  }
@@ -366,10 +372,7 @@
 							for (var j = 1; j < 2; j++) {
 							  geocoder.geocode({'address': destinationList[j]},
 								  showGeocodedAddressOnMap(true));
-							  outputDiv2.innerHTML += '<b>' + originList[i] + ' to ' + destinationList[j] +
-								  ': ' + results[j].distance.text + ' in ' +
-								  results[j].duration.text + '</b>' + '<br>';
-								 
+							  outputDiv2.innerHTML += '<b>'  + results[j].duration.text + '<br>' + results[j].distance.text +'</b>' ;
 							}
 						  }
 						  
