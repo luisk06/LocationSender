@@ -117,7 +117,7 @@
 				<div role="listpage" class="ui-content" id="lol">
 					<p id="lol_item">Loading...</p>
 				 </div>
-		<div><a href="#" id="send_data2" name="send_data2">SEND LOCATION</a></div>
+	        <!--	<div><a href="#" id="send_data2" name="send_data2">SEND LOCATION</a></div> -->
     </div>
 	
 	
@@ -198,7 +198,7 @@
 								var load_item = document.getElementById('lol_item');
 								var test1 = parseFloat(data[0].idts_load);
 									for(i=0;i<data.length;i++){
-										load_item.innerHTML = '<a href="#" onclick="load_details('+i+')">'+data[i].customer+'</a><br />';
+										load_item.innerHTML = '<a href="#" onclick="load_details('+i+')">ITEM : '+data[i].customer+'</a><br />';
 										}
 										location.href = "#page1_1";
 										
