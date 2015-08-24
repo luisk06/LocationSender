@@ -134,7 +134,7 @@
                 <div id="map"></div>
                 <div id="wrapper">
                 <table>
-                	<tr><td>To PickUp Place</td><td>To Destination</td></tr>
+                	<tr><td>SHIPPER (FROM)</td><td>CONSIGNEE (TO)</td></tr>
                  	<tr>
                     	<td>
                         	<div  id="outputDiv"></div>
@@ -149,6 +149,9 @@
                      </tr>
                     <tr>
                     <td>
+                        	<div><a href="#" id="send_data3" name="send_data3" class="btn-class2">GET SIGNATURE</a></div>
+                        </td>
+                        <td>
                         	<div><a href="#" id="send_data3" name="send_data3" class="btn-class2">GET SIGNATURE</a></div>
                         </td>
                      </tr>
@@ -194,7 +197,7 @@
 			
 		
 			 $('#send_data1').click(function(){
-			 	$("lol_item").html("");
+			 	//$("lol_item").html("");
 				var id_driver = $('#user_name').val();
 				alert('prueba');
 				 $.ajax({
@@ -205,10 +208,7 @@
 	                                console.log(data);
 								//alert(data[0].dp_long);
 								alert(data[0].idts_load);//-96.8141;//data[0].dp_long;
-								//var load_item = document.getElementById('lol_item');
-								
-								//var test1 = parseFloat(data[0].idts_load);
-								
+								$("#lol_item").html("");
 									for(i=0;i<data.length;i++){
 											$("#lol_item").append('<a href="#" style="color: red;" class="" onclick="load_details('+i+')">LOAD # :'+data[i].load_number+' : '+data[i].customer+'</a><br />');
 										}
@@ -306,7 +306,7 @@
 						origins: [origin1, origin2],
 						destinations: [destinationA, destinationB],
 						travelMode: google.maps.TravelMode.DRIVING,
-						unitSystem: google.maps.UnitSystem.METRIC,
+						unitSystem: google.maps.UnitSystem.IMPERIAL,
 						avoidHighways: false,
 						avoidTolls: false
 					  }, function(response, status) {
