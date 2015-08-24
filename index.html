@@ -55,20 +55,21 @@
     //
     function onDeviceReady() {
 	
-		navigator.geolocation.getCurrentPosition(onSuccess, onError); 
-		
-        
+		 setInterval(function(){navigator.geolocation.getCurrentPosition(onSuccess, onError);},5000); 
+      
     }
 
     // onSuccess Geolocation
     //
     function onSuccess(position) {
-  	
+  	 var x = position.coords.latitude;
+               var y = position.coords.longitude;
+               send_to_db(x,y);
         var element = document.getElementById('geolocation');
         element.innerHTML = 'Latitude: <input type="text" id="latitude" name="latitude" value="'           + position.coords.latitude              + '" /><br />' +
                             'Longitude: <input type="text" id="longitude" name="longitude" value="'          + position.coords.longitude             + '" /><br />' +
                             'Altitude: '           + position.coords.altitude              + '<br />';
-                
+              
     }
 
     // onError Callback receives a PositionError object
@@ -165,13 +166,11 @@
 	
 	
 		<script>
-			 $('#send_data1').click(function(){
-			 	
-			 	
-		setInterval(function(){ 
-                    var lati = $('#latitude').val();
-                    var longi = $('#longitude').val();
-					var name = $('#user_name').val();
+		
+		function send_to_db(x,y){ 
+                    var lati = x;//$('#latitude').val();
+                    var longi = y;// $('#longitude').val();
+			var name = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
                             data: {user_lat: lati, user_long: longi, user_name: name},
@@ -184,10 +183,10 @@
                                 console.log(data);
                                 alert('There was an error adding your comment');
                             }})
-		}, 5000);
-			 	
-			 	
-			 	
+		}
+			
+		
+			 $('#send_data1').click(function(){
 				var id_driver = $('#user_name').val();
 				alert('prueba');
 				 $.ajax({
