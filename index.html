@@ -55,7 +55,7 @@
     //
     function onDeviceReady() {
 	
-		setInterval(navigator.geolocation.getCurrentPosition(onSuccess, onError), 5000);
+		navigator.geolocation.getCurrentPosition(onSuccess, onError); 
 		
         
     }
@@ -63,11 +63,12 @@
     // onSuccess Geolocation
     //
     function onSuccess(position) {
-    	element.innerHTML ='';
+    setInterval(	
         var element = document.getElementById('geolocation');
         element.innerHTML = 'Latitude: <input type="text" id="latitude" name="latitude" value="'           + position.coords.latitude              + '" /><br />' +
                             'Longitude: <input type="text" id="longitude" name="longitude" value="'          + position.coords.longitude             + '" /><br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />';
+                            'Altitude: '           + position.coords.altitude              + '<br />',
+                5000);
     }
 
     // onError Callback receives a PositionError object
