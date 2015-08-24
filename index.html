@@ -408,6 +408,7 @@ $('#send_data3').click(function() {
 	$('#thisisundo').removeClass('ui-btn ui-input-btn ui-corner-all ui-shadow');
 	location.href = "#page3";
 	// This is the part where jSignature is initialized.
+	$("#signature").html("");
 	var $sigdiv = $("#signature").jSignature({'UndoButton':true})
 	
 	// All the code below is just code driving the demo. 
