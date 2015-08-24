@@ -128,7 +128,8 @@
    
     <div data-role="page" id="page2" data-url="map-page">        	
         	<div data-role="header">
-            	<h1> <a href="#page1_1" id="back" class="btn-class2"> Back</a></h1>
+            	<h1> <a href="#page1_1" id="back" style="color: black;" class=""> Back</a></h1><br />
+            	<h2 style="color: red;" id="header_load"></h2>
             </div>
             <div role="mappage" class="ui-content">
                 <div id="map"></div>
@@ -152,7 +153,7 @@
                         	<div><a href="#" id="send_data3" name="send_data3" class="btn-class2">GET SIGNATURE</a></div>
                         </td>
                         <td>
-                        	<div><a href="#" id="send_data3" name="send_data3" class="btn-class2">GET SIGNATURE</a></div>
+                        	<div><a href="#" id="" name="" class="btn-class2">GET SIGNATURE</a></div>
                         </td>
                      </tr>
                 </table>    
@@ -267,6 +268,7 @@
 				
 				$("#origin_text").html("Name: "+data[ix].or_contact+"<br /> Address: "+data[ix].or_address_1+"<br /> City :"+data[ix].or_city+", ST:"+data[ix].or_state+" <br/> item: "+data[ix].item1+"");
 				$("#destination_text").html("Name: "+data[ix].dt_contact+"<br /> Address: "+data[ix].dt_address_1+"<br /> City :"+data[ix].dt_city+", ST:"+data[ix].dt_state+" <br/>");
+				$("#header_load").html("Load # :"+data[ix].load_number+": "+data[ix].customer+" ");
 				
                                 //alert('Your location was successfully added');
                             },
