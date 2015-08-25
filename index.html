@@ -49,34 +49,7 @@
 	
 
     // Wait for device API libraries to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
 
-    // device APIs are available
-    //
-    function onDeviceReady() {
-	
-		 navigator.geolocation.getCurrentPosition(onSuccess, onError);
-      
-    }
-
-    // onSuccess Geolocation
-    //
-    function onSuccess(position) {
-  	
-        var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: <input type="text" id="latitude" name="latitude" value="'           + position.coords.latitude              + '" /><br />' +
-                            'Longitude: <input type="text" id="longitude" name="longitude" value="'          + position.coords.longitude             + '" /><br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />';
-              
-    }
-
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
 
     </script>
  
@@ -88,9 +61,18 @@
     </div>
   	<div class="inputstyle">
   		<div role="main" class="ui-content">
-        	
-        	<p id="geolocation">Finding geolocation...</p>
             	<!--<div><input type="text" id="user_name" name="user_name" value="" placeholder="your code" style="width:50%"/></div>-->
+                <div>
+                    <select id="geolocation2">
+                        <option value="choose">Choose your location...</option>
+                         <option value="34.054934,-118.240455">Los Angeles, CA</option>
+                         <option value="25.761923,-80.199300">Miami, FL</option>
+                         <option value="39.735058,-104.991163">Denver, CO</option>
+                         <option value="33.462514,-112.071519">Phoenix, AZ</option>
+                         <option value="40.774146,-73.970248">New York, NY</option>
+                         <option value="39.106552,-84.506124">Cincinatti, OH</option>
+                    </select>
+                </div>
                 <div>
                     <select id="user_name">
                         <option value="">Choose user...</option>
@@ -127,15 +109,15 @@
 	
    
     <div data-role="page" id="page2" data-url="map-page">        	
-        	<div data-role="header">
-            	<h1> <a href="#page1_1" id="back" style="color: black;" class=""> Back</a></h1><br />
+        	<div data-role="header" style="height:1.5em">
+            	<h1 style="padding-top:2px"> <a href="#page1_1" id="back" style="color: black;" class=""> Back</a></h1><br />
             </div>
-            <h2 style="color: red;" id="header_load"></h2>
-            <div role="mappage" class="ui-content">
+            <h4 style="color: red; margin-top:2px; margin-bottom:2px; margin-left: 15px;" id="header_load"></h4>
+            <div role="mappage" class="ui-content" style="padding-top:2px">
                 <div id="map"></div>
                 <div id="wrapper">
                 <table>
-                	<tr><td>SHIPPER (FROM)</td><td>CONSIGNEE (TO)</td></tr>
+                	<tr><td width="48%">SHIPPER (FROM)</td><td width="48%">CONSIGNEE (TO)</td></tr>
                  	<tr>
                     	<td>
                         	<div  id="outputDiv"></div>
@@ -147,6 +129,10 @@
                     <tr>
                          <td><div id="origin_text"></div></td>
                          <td><div id="destination_text"></div></td>
+                     </tr>
+                     <tr>
+                         <td valign="top"><div id="item_origin"></div></td>
+                         <td valign="top">&nbsp;</td>
                      </tr>
                     <tr>
                     <td>
@@ -178,7 +164,7 @@
 	
 		<script>
 		
-		function send_to_db(x,y){ 
+	/*	function send_to_db(x,y){ 
                     var lati = x;//$('#latitude').val();
                     var longi = y;// $('#longitude').val();
 			var name = $('#user_name').val();
@@ -194,17 +180,20 @@
                                 console.log(data);
                                 alert('There was an error adding your location');
                             }})
-		}
+		}*/
 			
 		
 			 $('#send_data1').click(function(){
 			 	//$("lol_item").html("");
+			
+				
 				var id_driver = $('#user_name').val();
-				alert('prueba');
+				alert('test');
 				 $.ajax({
-                            	type: 'POST',
+                 type: 'POST',
 				dataType: 'json',
-	                        url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
+	          	url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
+								
 	                            success: function(data){
 	                                console.log(data);
 								//alert(data[0].dp_long);
@@ -215,7 +204,7 @@
 										}
 										location.href = "#page1_1";
 										
-										
+									/*	
 										setInterval(function(){ 
 											 	navigator.geolocation.getCurrentPosition(onSuccess, onError);
 											 	  function onSuccess(position) {
@@ -227,7 +216,7 @@
 												        alert('code: '    + error.code    + '\n' +
 												              'message: ' + error.message + '\n');
 												    }
-											 },10000);
+											 },10000);*/
 										
 										
 										
@@ -244,10 +233,14 @@
             function load_details(ix){
 				 //location.href("#page2");
 				 location.href = "#page2";
-				   alert($('#latitude').val());
+				 var myloc = $("#geolocation2 option:selected").val();
+				 var split_loc = myloc.split(',');//$("#geolocation2").value().split(',');
+						var lat1 = split_loc[0];
+						var lng1 = split_loc[1];
+				   alert(split_loc[1]);
 			
-                    var latitude_driver = parseFloat($('#latitude').val());//37.55;
-                    var longitude_driver = parseFloat($('#longitude').val());//-77.44;
+                    var latitude_driver = parseFloat(lat1);//37.55;
+                    var longitude_driver = parseFloat(lng1);//-77.44;
 		    var id_driver = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
@@ -266,10 +259,10 @@
 				initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
 				
 				
-				$("#origin_text").html("Name: "+data[ix].or_contact+"<br /> Address: "+data[ix].or_address_1+"<br /> City :"+data[ix].or_city+", ST:"+data[ix].or_state+" <br/> item: "+data[ix].item1+"");
-				$("#destination_text").html("Name: "+data[ix].dt_contact+"<br /> Address: "+data[ix].dt_address_1+"<br /> City :"+data[ix].dt_city+", ST:"+data[ix].dt_state+" <br/>");
-				$("#header_load").html("Load # :"+data[ix].load_number+": "+data[ix].customer+" ");
-				
+								$("#origin_text").html("- "+data[ix].or_contact+"<br />- "+data[ix].or_address_1+"<br />- "+data[ix].or_city+", "+data[ix].or_state+" <br/>");
+								$("#destination_text").html("- "+data[ix].dt_contact+"<br /> - "+data[ix].dt_address_1+"<br />- "+data[ix].dt_city+", "+data[ix].dt_state+" <br/>");
+								$("#header_load").html("Load # :"+data[ix].load_number+": "+data[ix].customer+" ");
+								$("#item_origin").html(""+data[ix].item1+"");
                                 //alert('Your location was successfully added');
                             },
                             error: function(data){
@@ -362,7 +355,7 @@
 							for (var j = 0; j < 1; j++) {
 							  geocoder.geocode({'address': destinationList[j]},
 								  showGeocodedAddressOnMap(true));
-							  outputDiv.innerHTML += '<b>'+ results[j].duration.text + results[j].distance.text + '<br>' + '</b>';
+							  outputDiv.innerHTML += '<b>'+ results[j].duration.text  + '<br>' + results[j].distance.text + '</b>';
 								 
 							}
 						  }
