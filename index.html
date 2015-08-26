@@ -46,11 +46,8 @@
       <script src="js/jquery.mobile-1.4.5.min.js"></script> 
     <script type="text/javascript" charset="utf-8">
 	
-	
-
+	    
     // Wait for device API libraries to load
-
-
     </script>
  
   </head>
@@ -136,10 +133,10 @@
                      </tr>
                     <tr>
                     <td>
-                        	<div><a href="#" id="send_data3" name="send_data3" class="btn-class2">GET SIGNATURE</a></div>
+                        	<div><a href="#page3" id="a" name="a" class="btn-class3">GET SIGNATURE</a></div>
                         </td>
                         <td>
-                        	<div><a href="#" id="" name="" class="btn-class2">GET SIGNATURE</a></div>
+                        	<div><a href="#page3" id="b" name="b" class="btn-class3">GET SIGNATURE</a></div>
                         </td>
                      </tr>
                 </table>    
@@ -164,9 +161,12 @@
 	
 		<script>
 		
-	/*	function send_to_db(x,y){ 
-                    var lati = x;//$('#latitude').val();
-                    var longi = y;// $('#longitude').val();
+		function send_to_db(){ 
+                    var myloc = $("#geolocation2 option:selected").val();
+				 	var split_loc = myloc.split(',');//$("#geolocation2").value().split(',');
+					var lati = split_loc[0];
+					var longi = split_loc[1];
+				   alert('sending to database');
 			var name = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
@@ -180,7 +180,7 @@
                                 console.log(data);
                                 alert('There was an error adding your location');
                             }})
-		}*/
+		}
 			
 		
 			 $('#send_data1').click(function(){
@@ -189,11 +189,13 @@
 				
 				var id_driver = $('#user_name').val();
 				alert('test');
-				 $.ajax({
-                 type: 'POST',
-				dataType: 'json',
-	          	url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
-								
+							 $.ajax({
+							 type: 'POST',
+							 dataType: 'json',
+							 url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
+								beforeSend: function(){
+									$('#geolocation2').hide();
+								},			
 	                            success: function(data){
 	                                console.log(data);
 								//alert(data[0].dp_long);
@@ -204,19 +206,20 @@
 										}
 										location.href = "#page1_1";
 										
-									/*	
+										
 										setInterval(function(){ 
 											 	navigator.geolocation.getCurrentPosition(onSuccess, onError);
 											 	  function onSuccess(position) {
-												  	 var x = position.coords.latitude;
-												         var y = position.coords.longitude;
-												         send_to_db(x,y);
+												  	 /*var x = position.coords.latitude;
+												         var y = position.coords.longitude;*/
+												         send_to_db();
 											 	  }
 											 	   function onError(error) {
 												        alert('code: '    + error.code    + '\n' +
 												              'message: ' + error.message + '\n');
+														send_to_db();
 												    }
-											 },10000);*/
+											 },100000);
 										
 										
 										
@@ -241,12 +244,15 @@
 			
                     var latitude_driver = parseFloat(lat1);//37.55;
                     var longitude_driver = parseFloat(lng1);//-77.44;
-		    var id_driver = $('#user_name').val();
+		    		var id_driver = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
-			    dataType: 'json',
+			    			dataType: 'json',
                             //data: {driver: id_driver},
                             url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
+							beforeSend: function(){
+								$('#geolocation2').hide();
+								},
                             success: function(data){
                                 console.log(data);
 				//alert(data[0].dp_long);
@@ -316,38 +322,40 @@
 						  outputDiv2.innerHTML = '';
 						  deleteMarkers(markersArray);
 						   
+							var marker = new google.maps.Marker({
+											position: {lat: latitude_driver, lng: longitude_driver},
+											map: map,
+											title: 'Driver!',
+											icon:'http://leanstaffing.com/testserver/map-marker-driver.png',
+											});
+											
+							var marker = new google.maps.Marker({
+											position:  {lat: latitude_pickup, lng: longitude_pickup},
+											map: map,
+											icon: 'http://leanstaffing.com/testserver/map-marker-pickup.png',
+											title:'PICK UP!'
+											});
+											
+							var marker = new google.maps.Marker({
+											position:  {lat: latitude_drop, lng: longitude_drop},
+											map: map,
+											icon: 'http://leanstaffing.com/testserver/map-marker-delivery.png',
+											title: 'Delivery!'
+											});
 					
 						  var showGeocodedAddressOnMap = function(asDestination) {
 							var icon = asDestination ? destinationIcon : originIcon;
 							return function(results, status) {
 							  if (status === google.maps.GeocoderStatus.OK) {
 								map.fitBounds(bounds.extend(results[0].geometry.location));
-								markersArray.push(new google.maps.Marker({
-								  map: map,
-								  position: results[0].geometry.location,
-								  icon: icon
-								}));
+								
 							  } else {
 								alert('Geocode was not successful due to: ' + status);
 							  }
 							};
 						  };
 					
-						 /* for (var i = 0; i < originList.length; i++) {
-							var results = response.rows[i].elements;
-							  geocoder.geocode({'address': originList[i]},
-								  showGeocodedAddressOnMap(false));
-							for (var j = 0; j < results.length; j++) {
-							  geocoder.geocode({'address': destinationList[j]},
-								  showGeocodedAddressOnMap(true));
-							  outputDiv.innerHTML += '<b>' + originList[i] + ' to ' + destinationList[j] +
-								  ': ' + results[j].distance.text + ' in ' +
-								  results[j].duration.text + '</b>' + '<br>';
-								  alert(j);
-							}
-						  }
-						  */
-						  
+
 						  for (var i = 0; i < 1; i++) {
 							var results = response.rows[i].elements;
 							  geocoder.geocode({'address': originList[i]},
@@ -356,7 +364,6 @@
 							  geocoder.geocode({'address': destinationList[j]},
 								  showGeocodedAddressOnMap(true));
 							  outputDiv.innerHTML += '<b>'+ results[j].duration.text  + '<br>' + results[j].distance.text + '</b>';
-								 
 							}
 						  }
 						  
@@ -399,10 +406,8 @@
 */
 (function($){
 
-$('#send_data3').click(function() {
-	$("#signature").html("");
-	$('#thisisundo').removeClass('ui-btn ui-input-btn ui-corner-all ui-shadow');
-	location.href = "#page3";
+$(document).ready(function() {
+	
 	// This is the part where jSignature is initialized.
 	var $sigdiv = $("#signature").jSignature({'UndoButton':true})
 	
@@ -501,6 +506,8 @@ $('#send_data3').click(function() {
 })
 
 })(jQuery)
+
+
 
 </script>
 					
