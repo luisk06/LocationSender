@@ -20,14 +20,17 @@
 					display: inline-block;
 					width:95%;
 					top:0px;
-					border: 1px solid green;
+					/*border: 1px solid green;*/
+					color: white;
+                    background-color:#00CA28
 				}
 				#outputDiv2 {
 					display: inline-block;
 					width:95%;
 					top:0px;
-					
-					border: 1px solid green;
+					/*border: 1px solid green;*/
+					color: white;
+                    background-color:#00CA28
 				}
 				#lol{
 				overflow-y:scroll;
@@ -107,7 +110,7 @@
    
     <div data-role="page" id="page2" data-url="map-page">        	
         	<div data-role="header" style="height:1.5em">
-            	<h1 style="padding-top:2px"> <a href="#page1_1" id="back" style="color: black;" class=""> Back</a></h1><br />
+            	<h1 style="padding-top:2px"> <a href="#page1_1" id="back" class="btn-class3"> Back</a></h1><br />
             </div>
             <h4 style="color: red; margin-top:2px; margin-bottom:2px; margin-left: 15px;" id="header_load"></h4>
             <div role="mappage" class="ui-content" style="padding-top:2px">
@@ -128,8 +131,8 @@
                          <td><div id="destination_text"></div></td>
                      </tr>
                      <tr>
-                         <td valign="top"><div id="item_origin"></div></td>
-                         <td valign="top">&nbsp;</td>
+                         <td colspan="2" valign="top"><div id="item_origin"></div></td>
+                         <!-- <td valign="top">&nbsp;</td> -->
                      </tr>
                     <tr>
                     <td>
@@ -192,7 +195,7 @@
 							 $.ajax({
 							 type: 'POST',
 							 dataType: 'json',
-							 url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
+							 url: 'http://lean-staffing.com/trackngo/load/app_get_load/'+id_driver,
 								beforeSend: function(){
 									
 								},			
@@ -249,7 +252,7 @@
                             type: 'POST',
 			    			dataType: 'json',
                             //data: {driver: id_driver},
-                            url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
+                            url: 'http://lean-staffing.com/trackngo/load/app_get_load/'+id_driver,
 							beforeSend: function(){
 								
 								},
@@ -297,8 +300,8 @@
       						'chst=d_map_pin_letter&chld=O|FFFF00|000000';
 					  var map = new google.maps.Map(document.getElementById('map'), {
 						//center: {lat: 55.53, lng: 9.4},
-						center: {lat: latitude_driver, lng: longitude_driver},
-						zoom: 7
+						center: {lat: latitude_pickup, lng: longitude_pickup},
+						zoom: 9,
 					  });
 					  var geocoder = new google.maps.Geocoder;
 					
@@ -347,7 +350,7 @@
 							var icon = asDestination ? destinationIcon : originIcon;
 							return function(results, status) {
 							  if (status === google.maps.GeocoderStatus.OK) {
-								map.fitBounds(bounds.extend(results[0].geometry.location));
+								/*map.fitBounds(bounds.extend(results[0].geometry.location));*/
 								
 							  } else {
 								alert('Geocode was not successful due to: ' + status);
@@ -363,7 +366,7 @@
 							for (var j = 0; j < 1; j++) {
 							  geocoder.geocode({'address': destinationList[j]},
 								  showGeocodedAddressOnMap(true));
-							  outputDiv.innerHTML += '<b>'+ results[j].duration.text  + '<br>' + results[j].distance.text + '</b>';
+							  outputDiv.innerHTML += '&nbsp;'+ results[j].duration.text  + '<br>&nbsp;' + results[j].distance.text + '';
 							}
 						  }
 						  
@@ -374,7 +377,7 @@
 							for (var j = 1; j < 2; j++) {
 							  geocoder.geocode({'address': destinationList[j]},
 								  showGeocodedAddressOnMap(true));
-							  outputDiv2.innerHTML += '<b>'  + results[j].duration.text + '<br>' + results[j].distance.text +'</b>' ;
+							  outputDiv2.innerHTML += '&nbsp;'  + results[j].duration.text + '<br>&nbsp;' + results[j].distance.text +'' ;
 							}
 						  }
 						  
