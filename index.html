@@ -61,7 +61,7 @@
             	<!--<div><input type="text" id="user_name" name="user_name" value="" placeholder="your code" style="width:50%"/></div>-->
                 <div>
                     <select id="geolocation2">
-                        <option value="choose">Choose your location...</option>
+                        <option value="">Choose your location...</option>
                          <option value="34.054934,-118.240455">Los Angeles, CA</option>
                          <option value="25.761923,-80.199300">Miami, FL</option>
                          <option value="39.735058,-104.991163">Denver, CO</option>
@@ -162,7 +162,7 @@
 		<script>
 		
 		function send_to_db(){ 
-                    var myloc = $("#geolocation2 option:selected").val();
+                    var myloc = $("#geolocation2").val();
 				 	var split_loc = myloc.split(',');//$("#geolocation2").value().split(',');
 					var lati = split_loc[0];
 					var longi = split_loc[1];
@@ -194,7 +194,7 @@
 							 dataType: 'json',
 							 url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
 								beforeSend: function(){
-									$('#geolocation2').hide();
+									//$('#geolocation2').hide();
 								},			
 	                            success: function(data){
 	                                console.log(data);
