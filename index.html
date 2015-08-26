@@ -169,7 +169,7 @@
 				 	var split_loc = myloc.split(',');//$("#geolocation2").value().split(',');
 					var lati = split_loc[0];
 					var longi = split_loc[1];
-				   alert('sending to database');
+				   //alert('sending to database');
 			var name = $('#user_name').val();
                         $.ajax({
                             type: 'POST',
@@ -191,7 +191,7 @@
 			
 				
 				var id_driver = $('#user_name').val();
-				alert('test');
+				//alert('test');
 							 $.ajax({
 							 type: 'POST',
 							 dataType: 'json',
@@ -202,7 +202,7 @@
 	                            success: function(data){
 	                                console.log(data);
 								//alert(data[0].dp_long);
-								alert(data[0].idts_load);//-96.8141;//data[0].dp_long;
+								//alert(data[0].idts_load);//-96.8141;//data[0].dp_long;
 								$("#lol_item").html("");
 									for(i=0;i<data.length;i++){
 											$("#lol_item").append('<a href="#" style="color: red;" class="" onclick="load_details('+i+')">LOAD # :'+data[i].load_number+' : '+data[i].customer+'</a><br />');
@@ -243,7 +243,7 @@
 				 var split_loc = myloc.split(',');//$("#geolocation2").value().split(',');
 						var lat1 = split_loc[0];
 						var lng1 = split_loc[1];
-				   alert(split_loc[1]);
+				   //alert(split_loc[1]);
 			
                     var latitude_driver = parseFloat(lat1);//37.55;
                     var longitude_driver = parseFloat(lng1);//-77.44;
@@ -259,7 +259,7 @@
                             success: function(data){
                                 console.log(data);
 				//alert(data[0].dp_long);
-				alert(parseFloat(data[ix].dp_long));//-96.8141;//data[0].dp_long;
+				//alert(parseFloat(data[ix].dp_long));//-96.8141;//data[0].dp_long;
 				
 				var latitude_pickup = parseFloat(data[ix].pk_lat);
 				var longitude_pickup =parseFloat(data[ix].pk_long);
