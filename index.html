@@ -162,7 +162,7 @@
 		<script>
 		
 		function send_to_db(){ 
-                    var myloc = $("#geolocation2").val();
+                    var myloc = $("#geolocation2 option:selected").val();
 				 	var split_loc = myloc.split(',');//$("#geolocation2").value().split(',');
 					var lati = split_loc[0];
 					var longi = split_loc[1];
@@ -194,7 +194,7 @@
 							 dataType: 'json',
 							 url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
 								beforeSend: function(){
-									//$('#geolocation2').hide();
+									
 								},			
 	                            success: function(data){
 	                                console.log(data);
@@ -251,7 +251,7 @@
                             //data: {driver: id_driver},
                             url: 'http://lean-staffing.com/trackngo/load/get_load/'+id_driver,
 							beforeSend: function(){
-								$('#geolocation2').hide();
+								
 								},
                             success: function(data){
                                 console.log(data);
