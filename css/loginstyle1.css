@@ -43,6 +43,25 @@
 	border-bottom: 3px solid #bc0000;
 	cursor: pointer;
 }
+
+.btn-class3 {
+	font-family: 'Source Sans Pro', sans-serif;
+	text-align:center;
+	display:block;
+	width: 100%;
+	border-radius: 7px;
+	background: #ff4a20;
+	text-decoration:none;
+	border: none;
+	color: #FFFFFF;
+	margin-top: -5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	outline: none;
+	font-size: 16px;
+	border-bottom: 3px solid #bc0000;
+	cursor: pointer;
+}
 .inputstyle{
 	}
 .inputstyle input {
