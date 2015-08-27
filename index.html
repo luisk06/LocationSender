@@ -198,7 +198,7 @@
 								//alert(data[0].idts_load);//-96.8141;//data[0].dp_long;
 								$("#lol_item").html("");
 									for(i=0;i<data.length;i++){
-											$("#lol_item").append('<a href="#" style="color: red;" class="" onclick="load_details('+i+')">LOAD # :'+data[i].load_number+' : '+data[i].customer+'</a><br />');
+											$("#lol_item").append('<a href="#" style="color: red;" class="" onclick="load_details('+data[i].idts_load+')">LOAD # :'+data[i].load_number+' : '+data[i].customer+'</a><br />');
 										}
 										location.href = "#page1_1";
 										
@@ -245,7 +245,7 @@
                             type: 'POST',
 			    			dataType: 'json',
                             //data: {driver: id_driver},
-                            url: 'http://lean-staffing.com/trackngo/load/app_get_load/'+id_driver,
+                            url: 'http://lean-staffing.com/trackngo/load/app_get_load_id/'+ix,
 							beforeSend: function(){
 								
 								},
@@ -254,17 +254,17 @@
 				//alert(data[0].dp_long);
 				//alert(parseFloat(data[ix].dp_long));//-96.8141;//data[0].dp_long;
 				
-				var latitude_pickup = parseFloat(data[ix].pk_lat);
-				var longitude_pickup =parseFloat(data[ix].pk_long);
-				var latitude_drop = parseFloat(data[ix].dp_lat);
-				var longitude_drop = parseFloat(data[ix].dp_long);
+				var latitude_pickup = parseFloat(data[0].pk_lat);
+				var longitude_pickup =parseFloat(data[0].pk_long);
+				var latitude_drop = parseFloat(data[0].dp_lat);
+				var longitude_drop = parseFloat(data[0].dp_long);
 				initMap1(latitude_driver, longitude_driver, latitude_pickup, longitude_pickup, latitude_drop, longitude_drop);
 				
 				
-								$("#origin_text").html("- "+data[ix].or_contact+"<br />- "+data[ix].or_address_1+"<br />- "+data[ix].or_city+", "+data[ix].or_state+" <br/>");
-								$("#destination_text").html("- "+data[ix].dt_contact+"<br /> - "+data[ix].dt_address_1+"<br />- "+data[ix].dt_city+", "+data[ix].dt_state+" <br/>");
-								$("#header_load").html("Load # :"+data[ix].load_number+": "+data[ix].customer+" ");
-								$("#item_origin").html(""+data[ix].item1+"");
+								$("#origin_text").html("- "+data[0].or_contact+"<br />- "+data[0].or_address_1+"<br />- "+data[0].or_city+", "+data[0].or_state+" <br/>");
+								$("#destination_text").html("- "+data[0].dt_contact+"<br /> - "+data[0].dt_address_1+"<br />- "+data[0].dt_city+", "+data[0].dt_state+" <br/>");
+								$("#header_load").html("Load # :"+data[0].load_number+": "+data[0].customer+" ");
+								$("#item_origin").html(""+data[1].name+"");
                                 //alert('Your location was successfully added');
                             },
                             error: function(data){
